@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class FileStorageService {
 
 	@Autowired
 	private FileStorageProperties fileStorageProperties;
+	
+	List<String> files = new ArrayList<>();
 
 	public String storeFile(MultipartFile file) {
 		if (file == null) {
@@ -38,6 +42,7 @@ public class FileStorageService {
 
 		try {
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+			files.add(fileName);
 			return fileName;
 		} catch (IOException ex) {
 			throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
@@ -56,6 +61,10 @@ public class FileStorageService {
 			log.error("Could not convert file to Base64");
 			throw new FileStorageException("Could not convert file to Base64" + fileName + ". Please try again!", e);
 		}
+	}
+	
+	public List<String> getFiles() {
+		return files;
 	}
 
 }

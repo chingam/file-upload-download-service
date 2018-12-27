@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FileUploadDownloadApplication {
+public class FileStoragedApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FileUploadDownloadApplication.class, args);
+		SpringApplication.run(FileStoragedApplication.class, args);
 	}
 
 }

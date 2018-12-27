@@ -17,7 +17,7 @@ import com.bjitgroup.file.service.FileStorageService;
 
 @RestController
 @RequestMapping("/file")
-public class FileController {
+public class FileStorageController {
 
 	@Autowired
 	private FileStorageService fileStorageService;
@@ -25,6 +25,11 @@ public class FileController {
 	@PostMapping("/upload")
 	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
 		Map<String, Object> resposeData = new HashMap<>();
+		if (file == null) {
+			resposeData.put("status", "fail");
+			resposeData.put("message", "Upload file is required");
+			return ResponseEntity.ok(resposeData);
+		}
 		resposeData.put("status", "success");
 		resposeData.put("file", fileStorageService.storeFile(file));
 		return ResponseEntity.ok(resposeData);
